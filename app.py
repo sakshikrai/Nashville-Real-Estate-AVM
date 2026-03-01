@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- 2. CUSTOM CSS INJECTION ---
+# --- 2. CUSTOM CSS ---
 st.markdown("""
 <style>
 .stApp {
@@ -25,21 +25,21 @@ footer {visibility: hidden;}
 }
 .card {
     background: white;
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    margin-bottom: 20px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    margin-top: 10px;
 }
 .price {
-    font-size: 42px;
+    font-size: 44px;
     font-weight: 700;
     color: #16a34a;
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 .stButton>button {
     width: 100%;
-    height: 48px;
-    border-radius: 10px;
+    height: 50px;
+    border-radius: 12px;
     background-color: #2563eb;
     color: white;
     font-weight: 600;
@@ -67,14 +67,12 @@ footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. LOAD THE ML ENGINE ---
+# --- 3. LOAD MODEL ---
 @st.cache_resource
 def load_model():
-    # If the .pkl file doesn't exist yet, extract it from the zip file
     if not os.path.exists("nashville_rf_model.pkl"):
         with zipfile.ZipFile("nashville_rf_model.zip", 'r') as zip_ref:
             zip_ref.extractall(".")
-            
     model = joblib.load("nashville_rf_model.pkl")
     features = joblib.load("model_features.pkl")
     return model, features
@@ -82,14 +80,15 @@ def load_model():
 model, features = load_model()
 NASHVILLE_AVG = 450000
 
-# --- 4. APP HEADER ---
+# --- 4. HEADER ---
 st.title("🏙️ Nashville Automated Valuation Model")
 st.caption("AI-powered real estate pricing engine using Davidson County housing data")
 st.divider()
 
-# --- 5. TWO-COLUMN LAYOUT ---
+# --- 5. LAYOUT ---
 col1, col2 = st.columns([1,1])
 
+# -------- LEFT COLUMN --------
 with col1:
     st.subheader("🏡 Property Details")
     bedrooms = st.slider("Bedrooms", 1, 10, 3)
@@ -99,8 +98,11 @@ with col1:
     age = st.slider("Property Age (Years)", 0, 150, 15)
     predict_button = st.button("Generate Valuation")
 
+# -------- RIGHT COLUMN --------
 with col2:
     st.subheader("📊 Valuation Result")
+
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
 
     if predict_button:
         input_data = pd.DataFrame([[bedrooms, full_bath, half_bath, acreage, age]], columns=features)
@@ -112,7 +114,6 @@ with col2:
         diff = prediction - NASHVILLE_AVG
         diff_text = f"+${diff:,.0f} above avg" if diff > 0 else f"-${abs(diff):,.0f} below avg"
 
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("<p style='color:#64748b;'>Estimated Market Value</p>", unsafe_allow_html=True)
         st.markdown(f"<p class='price'>${prediction:,.0f}</p>", unsafe_allow_html=True)
         st.markdown(f"<p style='color:#475569;'>Confidence Interval: ${low:,.0f} - ${high:,.0f}</p>", unsafe_allow_html=True)
@@ -125,21 +126,27 @@ with col2:
             tier = "Premium / Luxury" if prediction > 750000 else "Mid-Market" if prediction > 350000 else "Starter Home"
             st.metric("Property Tier", tier)
 
-        st.markdown("</div>", unsafe_allow_html=True)
-        st.info(f"**AI Insight:** Property age ({age} yrs) and lot size ({acreage} acres) strongly influence this valuation.")
-    else:
-        st.markdown("<div class='card' style='text-align:center;'><p style='color:#94a3b8;'>Adjust inputs on the left and click <b>Generate Valuation</b> to see the AI's prediction.</p></div>", unsafe_allow_html=True)
+        st.info(f"AI Insight: Property age ({age} yrs) and lot size ({acreage} acres) strongly influence this valuation.")
 
-# --- 6. POWER BI DASHBOARD SECTION (LIVE EMBED) ---
+    else:
+        st.markdown(
+            "<p style='color:#94a3b8; text-align:center; padding:60px;'>Adjust inputs on the left and click <b>Generate Valuation</b> to see the AI prediction.</p>",
+            unsafe_allow_html=True
+        )
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# --- 6. POWER BI DASHBOARD ---
 st.markdown("---")
 st.subheader("📊 Market Analytics Dashboard")
-st.markdown("<p style='color: #cbd5e1;'>Interact with the live Power BI dashboard below, connected directly to our Azure SQL database via DirectQuery.</p>", unsafe_allow_html=True)
+st.markdown("<p style='color: #cbd5e1;'>Interact with the live Power BI dashboard below, connected directly to Azure SQL via DirectQuery.</p>", unsafe_allow_html=True)
 
-# Your live Power BI URL
 power_bi_url = "https://app.powerbi.com/view?r=eyJrIjoiZTM2ZGI3OGQtNjVjYS00ZTFlLWFmOTAtODUxZTg4MDU1ODhhIiwidCI6IjM0YmQ4YmVkLTJhYzEtNDFhZS05ZjA4LTRlMGEzZjExNzA2YyJ9"
 
-# Embeds the live Power BI dashboard
-st.markdown(f'<iframe title="Nashville Housing Dashboard" width="100%" height="650" src="{power_bi_url}" frameborder="0" allowFullScreen="true" style="border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);"></iframe>', unsafe_allow_html=True)
+st.markdown(
+    f'<iframe title="Nashville Housing Dashboard" width="100%" height="650" src="{power_bi_url}" frameborder="0" allowFullScreen="true" style="border-radius: 14px; box-shadow: 0 6px 15px rgba(0,0,0,0.4);"></iframe>',
+    unsafe_allow_html=True
+)
 
 # --- 7. FOOTER ---
 st.markdown("""
@@ -148,6 +155,6 @@ st.markdown("""
     📊 Training Rows: ~20,600 | 📈 Testing Rows: ~5,150<br><br>
     Built with Python · Streamlit · Azure SQL · Scikit-Learn<br>
     Random Forest Regressor (R²: 0.468)<br><br>
-    <em>Portfolio project. Not financial advice.</em>
+    <em>2026 @ Sakshi Rai</em>
 </div>
 """, unsafe_allow_html=True)
