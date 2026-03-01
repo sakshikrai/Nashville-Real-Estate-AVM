@@ -85,6 +85,8 @@ with col1:
     predict_button = st.button("Generate Valuation")
 
 # -------- RIGHT COLUMN --------
+import streamlit.components.v1 as components
+
 with col2:
     st.subheader("📊 Valuation Result")
 
@@ -115,7 +117,8 @@ with col2:
 
         result_html = f"""
         <div style="background:white; padding:40px; border-radius:20px;
-                    box-shadow:0 20px 45px rgba(0,0,0,0.3); margin-top:10px;">
+                    font-family: Arial, sans-serif;
+                    box-shadow:0 20px 45px rgba(0,0,0,0.3);">
 
             <p style="color:#64748b; font-size:15px;">Estimated Market Value</p>
 
@@ -130,26 +133,22 @@ with col2:
             <hr style="margin:30px 0;">
 
             <div style="display:flex; justify-content:space-between;
-                        margin-bottom:30px; flex-wrap:wrap;">
+                        margin-bottom:30px;">
 
-                <div style="flex:1; min-width:200px;">
-                    <p style="color:#1e293b; font-weight:600;
-                              margin-bottom:6px; font-size:14px;">
+                <div>
+                    <p style="color:#1e293b; font-weight:600; font-size:14px;">
                         Vs Nashville Avg
                     </p>
-                    <p style="font-size:24px; font-weight:700;
-                              color:#0f172a;">
+                    <p style="font-size:24px; font-weight:700; color:#0f172a;">
                         {diff_text}
                     </p>
                 </div>
 
-                <div style="flex:1; text-align:right; min-width:200px;">
-                    <p style="color:#1e293b; font-weight:600;
-                              margin-bottom:6px; font-size:14px;">
+                <div style="text-align:right;">
+                    <p style="color:#1e293b; font-weight:600; font-size:14px;">
                         Property Tier
                     </p>
-                    <p style="font-size:24px; font-weight:700;
-                              color:#0f172a;">
+                    <p style="font-size:24px; font-weight:700; color:#0f172a;">
                         {tier}
                     </p>
                 </div>
@@ -157,7 +156,7 @@ with col2:
             </div>
 
             <div style="background:#e0f2fe; padding:18px;
-                        border-radius:12px; color:#0c4a6e; font-size:15px;">
+                        border-radius:12px; color:#0c4a6e;">
                 <b>AI Insight:</b> Property age ({age} yrs) and lot size
                 ({acreage} acres) strongly influence this valuation.
             </div>
@@ -165,19 +164,10 @@ with col2:
         </div>
         """
 
-        st.markdown(result_html, unsafe_allow_html=True)
+        components.html(result_html, height=500)
 
     else:
-        st.markdown("""
-        <div style="background:white; padding:80px;
-                    border-radius:20px;
-                    box-shadow:0 20px 45px rgba(0,0,0,0.3);
-                    margin-top:10px; text-align:center;
-                    color:#94a3b8;">
-            Adjust inputs on the left and click
-            <b>Generate Valuation</b> to see the AI prediction.
-        </div>
-        """, unsafe_allow_html=True)
+        st.info("Adjust inputs and click Generate Valuation.")
 
 # ---------------- POWER BI DASHBOARD ----------------
 st.markdown("---")
@@ -207,3 +197,4 @@ Random Forest Regressor (R²: 0.468)<br><br>
 <em>2026 © Sakshi Rai</em>
 </div>
 """, unsafe_allow_html=True)
+
