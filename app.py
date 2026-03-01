@@ -102,10 +102,11 @@ with col1:
 with col2:
     st.subheader("📊 Valuation Result")
 
-    st.markdown("<div class='card'>", unsafe_allow_html=True)
-
     if predict_button:
-        input_data = pd.DataFrame([[bedrooms, full_bath, half_bath, acreage, age]], columns=features)
+        input_data = pd.DataFrame(
+            [[bedrooms, full_bath, half_bath, acreage, age]],
+            columns=features
+        )
         prediction = model.predict(input_data)[0]
 
         margin = prediction * 0.045
@@ -114,27 +115,71 @@ with col2:
         diff = prediction - NASHVILLE_AVG
         diff_text = f"+${diff:,.0f} above avg" if diff > 0 else f"-${abs(diff):,.0f} below avg"
 
-        st.markdown("<p style='color:#64748b;'>Estimated Market Value</p>", unsafe_allow_html=True)
-        st.markdown(f"<p class='price'>${prediction:,.0f}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='color:#475569;'>Confidence Interval: ${low:,.0f} - ${high:,.0f}</p>", unsafe_allow_html=True)
-        st.markdown("---")
+        tier = "Premium / Luxury" if prediction > 750000 else \
+               "Mid-Market" if prediction > 350000 else \
+               "Starter Home"
 
-        colA, colB = st.columns(2)
-        with colA:
-            st.metric("Vs Nashville Avg", diff_text)
-        with colB:
-            tier = "Premium / Luxury" if prediction > 750000 else "Mid-Market" if prediction > 350000 else "Starter Home"
-            st.metric("Property Tier", tier)
+        # Single White Result Box
+        st.markdown(f"""
+        <div style="
+            background:white;
+            padding:40px;
+            border-radius:20px;
+            box-shadow:0 20px 45px rgba(0,0,0,0.3);
+            margin-top:10px;
+        ">
+            <p style="color:#64748b; font-size:15px;">Estimated Market Value</p>
+            <h1 style="color:#16a34a; margin-top:-10px; font-size:48px;">
+                ${prediction:,.0f}
+            </h1>
 
-        st.info(f"AI Insight: Property age ({age} yrs) and lot size ({acreage} acres) strongly influence this valuation.")
+            <p style="color:#475569;">
+                Confidence Interval: ${low:,.0f} - ${high:,.0f}
+            </p>
+
+            <hr style="margin:30px 0;">
+
+            <div style="display:flex; justify-content:space-between; margin-bottom:25px;">
+                <div>
+                    <p style="color:#64748b; margin-bottom:5px;">Vs Nashville Avg</p>
+                    <p style="font-size:22px; font-weight:600;">{diff_text}</p>
+                </div>
+                <div>
+                    <p style="color:#64748b; margin-bottom:5px;">Property Tier</p>
+                    <p style="font-size:22px; font-weight:600;">{tier}</p>
+                </div>
+            </div>
+
+            <div style="
+                background:#e0f2fe;
+                padding:18px;
+                border-radius:12px;
+                color:#0c4a6e;
+                font-size:15px;
+            ">
+                <b>AI Insight:</b> Property age ({age} yrs) and lot size ({acreage} acres)
+                strongly influence this valuation.
+            </div>
+
+        </div>
+        """, unsafe_allow_html=True)
 
     else:
-        st.markdown(
-            "<p style='color:#94a3b8; text-align:center; padding:60px;'>Adjust inputs on the left and click <b>Generate Valuation</b> to see the AI prediction.</p>",
-            unsafe_allow_html=True
-        )
-
-    st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("""
+        <div style="
+            background:white;
+            padding:80px;
+            border-radius:20px;
+            box-shadow:0 20px 45px rgba(0,0,0,0.3);
+            margin-top:10px;
+            text-align:center;
+            color:#94a3b8;
+        ">
+            Adjust inputs on the left and click <b>Generate Valuation</b>
+            to see the AI prediction.
+        </div>
+        """, unsafe_allow_html=True)
+    
 
 # --- 6. POWER BI DASHBOARD ---
 st.markdown("---")
@@ -158,3 +203,4 @@ st.markdown("""
     <em>2026 @ Sakshi Rai</em>
 </div>
 """, unsafe_allow_html=True)
+
