@@ -12,8 +12,7 @@ st.set_page_config(
 )
 
 # ---------------- CUSTOM CSS ----------------
-st.markdown("""
-<style>
+st.markdown("""<style>
 .stApp {
     background: linear-gradient(135deg, #0f172a, #1e293b);
     color: #f1f5f9;
@@ -45,8 +44,7 @@ footer {visibility: hidden;}
     font-size: 14px;
     color: #cbd5e1;
 }
-</style>
-""", unsafe_allow_html=True)
+</style>""", unsafe_allow_html=True)
 
 # ---------------- LOAD MODEL ----------------
 @st.cache_resource
@@ -100,73 +98,31 @@ with col2:
                "Mid-Market" if prediction > 350000 else \
                "Starter Home"
 
-        result_html = f"""
-<div style="background:white;
-            padding:40px;
-            border-radius:20px;
-            box-shadow:0 20px 45px rgba(0,0,0,0.3);
-            margin-top:10px;">
-
+        result_html = f"""<div style="background:white; padding:40px; border-radius:20px; box-shadow:0 20px 45px rgba(0,0,0,0.3); margin-top:10px;">
 <p style="color:#64748b; font-size:15px;">Estimated Market Value</p>
-
-<h1 style="color:#16a34a; margin-top:-10px; font-size:48px;">
-${prediction:,.0f}
-</h1>
-
-<p style="color:#475569;">
-Confidence Interval: ${low:,.0f} - ${high:,.0f}
-</p>
-
+<h1 style="color:#16a34a; margin-top:-10px; font-size:48px;">${prediction:,.0f}</h1>
+<p style="color:#475569;">Confidence Interval: ${low:,.0f} - ${high:,.0f}</p>
 <hr style="margin:30px 0;">
-
 <div style="display:flex; justify-content:space-between; margin-bottom:30px;">
-
-    <div style="flex:1;">
-        <p style="color:#1e293b; font-weight:600; margin-bottom:6px; font-size:14px;">
-            Vs Nashville Avg
-        </p>
-        <p style="font-size:24px; font-weight:700; color:#0f172a;">
-            {diff_text}
-        </p>
-    </div>
-
-    <div style="flex:1; text-align:right;">
-        <p style="color:#1e293b; font-weight:600; margin-bottom:6px; font-size:14px;">
-            Property Tier
-        </p>
-        <p style="font-size:24px; font-weight:700; color:#0f172a;">
-            {tier}
-        </p>
-    </div>
-
+<div style="flex:1;">
+<p style="color:#1e293b; font-weight:600; margin-bottom:6px; font-size:14px;">Vs Nashville Avg</p>
+<p style="font-size:24px; font-weight:700; color:#0f172a;">{diff_text}</p>
 </div>
-
-<div style="background:#e0f2fe;
-            padding:18px;
-            border-radius:12px;
-            color:#0c4a6e;
-            font-size:15px;">
-<b>AI Insight:</b> Property age ({age} yrs) and lot size ({acreage} acres)
-strongly influence this valuation.
+<div style="flex:1; text-align:right;">
+<p style="color:#1e293b; font-weight:600; margin-bottom:6px; font-size:14px;">Property Tier</p>
+<p style="font-size:24px; font-weight:700; color:#0f172a;">{tier}</p>
 </div>
-
 </div>
-"""
+<div style="background:#e0f2fe; padding:18px; border-radius:12px; color:#0c4a6e; font-size:15px;">
+<b>AI Insight:</b> Property age ({age} yrs) and lot size ({acreage} acres) strongly influence this valuation.
+</div>
+</div>"""
         st.markdown(result_html, unsafe_allow_html=True)
 
     else:
-        st.markdown("""
-<div style="background:white;
-            padding:80px;
-            border-radius:20px;
-            box-shadow:0 20px 45px rgba(0,0,0,0.3);
-            margin-top:10px;
-            text-align:center;
-            color:#94a3b8;">
-Adjust inputs on the left and click <b>Generate Valuation</b>
-to see the AI prediction.
-</div>
-""", unsafe_allow_html=True)
+        st.markdown("""<div style="background:white; padding:80px; border-radius:20px; box-shadow:0 20px 45px rgba(0,0,0,0.3); margin-top:10px; text-align:center; color:#94a3b8;">
+Adjust inputs on the left and click <b>Generate Valuation</b> to see the AI prediction.
+</div>""", unsafe_allow_html=True)
 
 # ---------------- POWER BI DASHBOARD ----------------
 st.markdown("---")
@@ -181,12 +137,10 @@ st.markdown(
 )
 
 # ---------------- FOOTER ----------------
-st.markdown("""
-<div class='custom-footer'>
-    <strong>Model & Dataset Information</strong><br><br>
-    📊 Training Rows: ~20,600 | 📈 Testing Rows: ~5,150<br><br>
-    Built with Python · Streamlit · Azure SQL · Scikit-Learn<br>
-    Random Forest Regressor (R²: 0.468)<br><br>
-    <em>2026 @ Sakshi Rai</em>
-</div>
-""", unsafe_allow_html=True)
+st.markdown("""<div class='custom-footer'>
+<strong>Model & Dataset Information</strong><br><br>
+📊 Training Rows: ~20,600 | 📈 Testing Rows: ~5,150<br><br>
+Built with Python · Streamlit · Azure SQL · Scikit-Learn<br>
+Random Forest Regressor (R²: 0.468)<br><br>
+<em>2026 @ Sakshi Rai</em>
+</div>""", unsafe_allow_html=True)
