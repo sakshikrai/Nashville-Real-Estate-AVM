@@ -6,6 +6,13 @@
 ![Scikit-Learn](https://img.shields.io/badge/Scikit_Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 
+## 🚀 Live Demos
+* **Web Application:** [Nashville Real Estate AVM (Streamlit)](https://nashville-real-estate-avm-ntswopkzofmrbggiictntq.streamlit.app/)
+* **Interactive Dashboard:** [Market Analytics (Power BI)](https://app.powerbi.com/links/DyfUuJE_wg?ctid=34bd8bed-2ac1-41ae-9f08-4e0a3f11706c&pbi_source=linkShare)
+
+## 📊 Power BI Market Analytics
+![Nashville Housing Dashboard](dashboard.jpeg)
+
 ## 📌 Project Overview
 An end-to-end full-stack data engineering and machine learning project predicting real estate prices in Davidson County, Nashville. This project encompasses cloud database management, automated data cleaning, geospatial enrichment, in-depth data analysis, predictive modeling, and a live BI dashboard deployed via a web application.
 
@@ -38,7 +45,7 @@ Before feeding data to the AI model, rigorous data analysis was performed to unc
 * **UI/UX:** Wrapped the AI model and the Power BI dashboard into a sleek, dark-themed Streamlit web application.
 * **Interactivity:** Users can input property features to receive real-time estimated market values, confidence intervals, and dynamic property tier categorizations.
 
-## 📊 Key AI Insights & Results
+## 🧠 Key AI Insights & Results
 * **Primary Drivers:** The Random Forest model identified **Property Age** and **Acreage (Lot Size)** as the most significant drivers of valuation in the Nashville market.
 * **Model Training:** Trained on ~20,600 historical records and tested on ~5,150 records.
 * **Accuracy:** Achieved an R² score of **0.468**.
@@ -48,6 +55,8 @@ Before feeding data to the AI model, rigorous data analysis was performed to unc
 ├── data_engineering_pipeline.sql   # Complete ETL & Star Schema SQL script
 ├── nashvill.ipynb                  # Jupyter Notebook for EDA, ML, and Geocoding
 ├── app.py                          # Streamlit Web Application code
+├── nashville_rf_model.zip          # Zipped Random Forest model
 ├── model_features.pkl              # Serialized model features
+├── dashboard.jpeg                  # Dashboard screenshot
 ├── requirements.txt                # Python dependencies
 └── README.md                       # Project documentation
