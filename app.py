@@ -1,6 +1,8 @@
 import streamlit as st
 import joblib
 import pandas as pd
+import zipfile
+import os
 
 # --- 1. PAGE CONFIGURATION ---
 st.set_page_config(
@@ -65,9 +67,14 @@ footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. LOAD THE ML ENGINE ---
+# --- 3. LOAD THE ML ENGINE (WITH ZIP EXTRACTOR) ---
 @st.cache_resource
 def load_model():
+    # If the .pkl file doesn't exist yet, extract it from the zip file!
+    if not os.path.exists("nashville_rf_model.pkl"):
+        with zipfile.ZipFile("nashville_rf_model.zip", 'r') as zip_ref:
+            zip_ref.extractall(".")
+            
     model = joblib.load("nashville_rf_model.pkl")
     features = joblib.load("model_features.pkl")
     return model, features
