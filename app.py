@@ -23,19 +23,6 @@ footer {visibility: hidden;}
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
-.card {
-    background: white;
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-    margin-top: 10px;
-}
-.price {
-    font-size: 44px;
-    font-weight: 700;
-    color: #16a34a;
-    margin-bottom: 5px;
-}
 .stButton>button {
     width: 100%;
     height: 50px;
@@ -57,12 +44,6 @@ footer {visibility: hidden;}
     text-align: center;
     font-size: 14px;
     color: #cbd5e1;
-}
-[data-testid="stMetricLabel"] {
-    color: #475569 !important;
-}
-[data-testid="stMetricValue"] {
-    color: #0f172a !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -138,15 +119,26 @@ Confidence Interval: ${low:,.0f} - ${high:,.0f}
 
 <hr style="margin:30px 0;">
 
-<div style="display:flex; justify-content:space-between; margin-bottom:25px;">
+<div style="display:flex; justify-content:space-between; margin-bottom:30px;">
+
     <div>
-        <p style="color:#64748b; margin-bottom:5px;">Vs Nashville Avg</p>
-        <p style="font-size:22px; font-weight:600;">{diff_text}</p>
+        <p style="color:#1e293b; font-weight:600; margin-bottom:6px; font-size:14px;">
+            Vs Nashville Avg
+        </p>
+        <p style="font-size:24px; font-weight:700; color:#0f172a;">
+            {diff_text}
+        </p>
     </div>
+
     <div>
-        <p style="color:#64748b; margin-bottom:5px;">Property Tier</p>
-        <p style="font-size:22px; font-weight:600;">{tier}</p>
+        <p style="color:#1e293b; font-weight:600; margin-bottom:6px; font-size:14px;">
+            Property Tier
+        </p>
+        <p style="font-size:24px; font-weight:700; color:#0f172a;">
+            {tier}
+        </p>
     </div>
+
 </div>
 
 <div style="background:#e0f2fe;
@@ -199,5 +191,3 @@ st.markdown("""
     <em>2026 @ Sakshi Rai</em>
 </div>
 """, unsafe_allow_html=True)
-
-
