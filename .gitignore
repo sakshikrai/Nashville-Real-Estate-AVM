@@ -1,0 +1,9 @@
+# Ignore data files to save space
+data/
+*.csv
+*.xlsx
+
+# Ignore system files
+.ipynb_checkpoints/
+__pycache__/
+.DS_Store
