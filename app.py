@@ -119,67 +119,63 @@ with col2:
                "Mid-Market" if prediction > 350000 else \
                "Starter Home"
 
-        # Single White Result Box
-        st.markdown(f"""
-        <div style="
-            background:white;
+        result_html = f"""
+<div style="background:white;
             padding:40px;
             border-radius:20px;
             box-shadow:0 20px 45px rgba(0,0,0,0.3);
-            margin-top:10px;
-        ">
-            <p style="color:#64748b; font-size:15px;">Estimated Market Value</p>
-            <h1 style="color:#16a34a; margin-top:-10px; font-size:48px;">
-                ${prediction:,.0f}
-            </h1>
+            margin-top:10px;">
 
-            <p style="color:#475569;">
-                Confidence Interval: ${low:,.0f} - ${high:,.0f}
-            </p>
+<p style="color:#64748b; font-size:15px;">Estimated Market Value</p>
 
-            <hr style="margin:30px 0;">
+<h1 style="color:#16a34a; margin-top:-10px; font-size:48px;">
+${prediction:,.0f}
+</h1>
 
-            <div style="display:flex; justify-content:space-between; margin-bottom:25px;">
-                <div>
-                    <p style="color:#64748b; margin-bottom:5px;">Vs Nashville Avg</p>
-                    <p style="font-size:22px; font-weight:600;">{diff_text}</p>
-                </div>
-                <div>
-                    <p style="color:#64748b; margin-bottom:5px;">Property Tier</p>
-                    <p style="font-size:22px; font-weight:600;">{tier}</p>
-                </div>
-            </div>
+<p style="color:#475569;">
+Confidence Interval: ${low:,.0f} - ${high:,.0f}
+</p>
 
-            <div style="
-                background:#e0f2fe;
-                padding:18px;
-                border-radius:12px;
-                color:#0c4a6e;
-                font-size:15px;
-            ">
-                <b>AI Insight:</b> Property age ({age} yrs) and lot size ({acreage} acres)
-                strongly influence this valuation.
-            </div>
+<hr style="margin:30px 0;">
 
-        </div>
-        """, unsafe_allow_html=True)
+<div style="display:flex; justify-content:space-between; margin-bottom:25px;">
+    <div>
+        <p style="color:#64748b; margin-bottom:5px;">Vs Nashville Avg</p>
+        <p style="font-size:22px; font-weight:600;">{diff_text}</p>
+    </div>
+    <div>
+        <p style="color:#64748b; margin-bottom:5px;">Property Tier</p>
+        <p style="font-size:22px; font-weight:600;">{tier}</p>
+    </div>
+</div>
+
+<div style="background:#e0f2fe;
+            padding:18px;
+            border-radius:12px;
+            color:#0c4a6e;
+            font-size:15px;">
+<b>AI Insight:</b> Property age ({age} yrs) and lot size ({acreage} acres)
+strongly influence this valuation.
+</div>
+
+</div>
+"""
+
+        st.markdown(result_html, unsafe_allow_html=True)
 
     else:
         st.markdown("""
-        <div style="
-            background:white;
+<div style="background:white;
             padding:80px;
             border-radius:20px;
             box-shadow:0 20px 45px rgba(0,0,0,0.3);
             margin-top:10px;
             text-align:center;
-            color:#94a3b8;
-        ">
-            Adjust inputs on the left and click <b>Generate Valuation</b>
-            to see the AI prediction.
-        </div>
-        """, unsafe_allow_html=True)
-    
+            color:#94a3b8;">
+Adjust inputs on the left and click <b>Generate Valuation</b>
+to see the AI prediction.
+</div>
+""", unsafe_allow_html=True)
 
 # --- 6. POWER BI DASHBOARD ---
 st.markdown("---")
@@ -203,4 +199,5 @@ st.markdown("""
     <em>2026 @ Sakshi Rai</em>
 </div>
 """, unsafe_allow_html=True)
+
 
