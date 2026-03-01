@@ -67,10 +67,10 @@ footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. LOAD THE ML ENGINE (WITH ZIP EXTRACTOR) ---
+# --- 3. LOAD THE ML ENGINE ---
 @st.cache_resource
 def load_model():
-    # If the .pkl file doesn't exist yet, extract it from the zip file!
+    # If the .pkl file doesn't exist yet, extract it from the zip file
     if not os.path.exists("nashville_rf_model.pkl"):
         with zipfile.ZipFile("nashville_rf_model.zip", 'r') as zip_ref:
             zip_ref.extractall(".")
