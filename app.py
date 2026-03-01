@@ -4,14 +4,14 @@ import pandas as pd
 import zipfile
 import os
 
-# --- 1. PAGE CONFIGURATION ---
+# ---------------- PAGE CONFIG ----------------
 st.set_page_config(
     page_title="Nashville Real Estate AVM",
     page_icon="🏙️",
     layout="wide"
 )
 
-# --- 2. CUSTOM CSS ---
+# ---------------- CUSTOM CSS ----------------
 st.markdown("""
 <style>
 .stApp {
@@ -48,7 +48,7 @@ footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. LOAD MODEL ---
+# ---------------- LOAD MODEL ----------------
 @st.cache_resource
 def load_model():
     if not os.path.exists("nashville_rf_model.pkl"):
@@ -61,12 +61,12 @@ def load_model():
 model, features = load_model()
 NASHVILLE_AVG = 450000
 
-# --- 4. HEADER ---
+# ---------------- HEADER ----------------
 st.title("🏙️ Nashville Automated Valuation Model")
 st.caption("AI-powered real estate pricing engine using Davidson County housing data")
 st.divider()
 
-# --- 5. LAYOUT ---
+# ---------------- LAYOUT ----------------
 col1, col2 = st.columns([1,1])
 
 # -------- LEFT COLUMN --------
@@ -121,7 +121,7 @@ Confidence Interval: ${low:,.0f} - ${high:,.0f}
 
 <div style="display:flex; justify-content:space-between; margin-bottom:30px;">
 
-    <div>
+    <div style="flex:1;">
         <p style="color:#1e293b; font-weight:600; margin-bottom:6px; font-size:14px;">
             Vs Nashville Avg
         </p>
@@ -130,7 +130,7 @@ Confidence Interval: ${low:,.0f} - ${high:,.0f}
         </p>
     </div>
 
-    <div>
+    <div style="flex:1; text-align:right;">
         <p style="color:#1e293b; font-weight:600; margin-bottom:6px; font-size:14px;">
             Property Tier
         </p>
@@ -152,7 +152,6 @@ strongly influence this valuation.
 
 </div>
 """
-
         st.markdown(result_html, unsafe_allow_html=True)
 
     else:
@@ -169,19 +168,19 @@ to see the AI prediction.
 </div>
 """, unsafe_allow_html=True)
 
-# --- 6. POWER BI DASHBOARD ---
+# ---------------- POWER BI DASHBOARD ----------------
 st.markdown("---")
 st.subheader("📊 Market Analytics Dashboard")
-st.markdown("<p style='color: #cbd5e1;'>Interact with the live Power BI dashboard below, connected directly to Azure SQL via DirectQuery.</p>", unsafe_allow_html=True)
+st.markdown("<p style='color: #cbd5e1;'>Interact with the live Power BI dashboard below.</p>", unsafe_allow_html=True)
 
 power_bi_url = "https://app.powerbi.com/view?r=eyJrIjoiZTM2ZGI3OGQtNjVjYS00ZTFlLWFmOTAtODUxZTg4MDU1ODhhIiwidCI6IjM0YmQ4YmVkLTJhYzEtNDFhZS05ZjA4LTRlMGEzZjExNzA2YyJ9"
 
 st.markdown(
-    f'<iframe title="Nashville Housing Dashboard" width="100%" height="650" src="{power_bi_url}" frameborder="0" allowFullScreen="true" style="border-radius: 14px; box-shadow: 0 6px 15px rgba(0,0,0,0.4);"></iframe>',
+    f'<iframe width="100%" height="650" src="{power_bi_url}" frameborder="0" allowFullScreen="true" style="border-radius:14px;"></iframe>',
     unsafe_allow_html=True
 )
 
-# --- 7. FOOTER ---
+# ---------------- FOOTER ----------------
 st.markdown("""
 <div class='custom-footer'>
     <strong>Model & Dataset Information</strong><br><br>
